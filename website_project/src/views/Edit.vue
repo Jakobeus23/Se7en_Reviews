@@ -1,4 +1,5 @@
 <template>
+<<<<<<< Updated upstream
     <div>
         <div class = "logoutButton">
             <button v-on:click="logout">
@@ -6,6 +7,42 @@
             </button>
         </div>
     </div>
+=======
+<div v-if="state.edit == true" class = "userProfileReview">
+  <div class = "userReviewItem">
+    <div class = "reviewContext"> 
+      <div class = "reviewItemContent">
+  <div>
+    <form @submit.prevent="handleSubmit(review.id)">
+            <span>Artist - &nbsp;</span>
+            <input type="text" class="text" v-model="state.review.artist" name="artist">
+            <br>
+            <span>Album - &nbsp;</span>
+            <input type="text" class="text" v-model="state.review.album" name="album">
+            <br>
+            <span>Songname - &nbsp;</span>
+            <input type="text" class="text" v-model="state.review.songname" name="songname">
+            <br>
+            <br>
+            <textarea class="text" rows = "8" cols="50" v-model="state.review.content" name="content"/>
+            <br>
+            
+            <!-- if edited, show button, else just have back button -->
+            <br>
+            <button class="button">Submit Changes</button>
+
+  <!--       <div v-show="state.invalid">
+            <div class="invalid">Invalid edit to submit</div>
+          </div>
+    -->
+    </form>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+>>>>>>> Stashed changes
 </template>
 
 <script>

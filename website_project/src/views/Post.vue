@@ -5,7 +5,11 @@
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
+<<<<<<< Updated upstream
             {{ userNew.Item.UserID }}'s Reviews:
+=======
+            Your Reviews
+>>>>>>> Stashed changes
         </div> 
 
         <div v-if="userNew.Item.reviews.length != 0">
@@ -53,8 +57,8 @@ export default {
             artist: newReviewList[2],
             album: newReviewList[3],
             songname: newReviewList[4],
-            dateCreated: newReviewList[5],
-
+            songURL: newReviewList[5],
+            dateCreated: newReviewList[6],
         });
         saveReview([userNew.value.Item.reviews[0], userNew.value.Item.UserID])
     }

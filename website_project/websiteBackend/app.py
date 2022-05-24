@@ -3,6 +3,7 @@ import os, json, boto3, requests        # look up what requests does exactly
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from boto3.dynamodb.conditions import Key, Attr
+import SongSearch
 
 # Run flask app and cors =  browser compatibility basically
 app = Flask(__name__)  #  name == special name for module
@@ -19,8 +20,34 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 @app.route("/")
 @app.route("/home")
 def Home():
+<<<<<<< Updated upstream
     return NULL
 
+=======
+    # get item from dynamodb table 'Users'
+    userInfoJSON = request.json
+    userInfo = dict(userInfoJSON)
+    userID = userInfo.get("userId")
+    userTable = dynamodb.Table('Users')
+
+    # get user from table and return json
+    user = userTable.get_item(Key = {
+        "UserID": str(userID)
+    })
+    return jsonify(user)
+
+# Return song url
+@app.route("/song", methods = ['GET', 'POST'])
+def Song():
+    # get song url from given name
+    songTitle = request.json
+    print(songTitle)
+    songTitle = dict(songTitle)
+    
+    return jsonify(SongSearch.GetLink(songTitle))
+
+# this method is useless rn btw
+>>>>>>> Stashed changes
 @app.route("/user/<userId>", methods = ['GET']) # GET is the default method and not required
 def userPage(userId):
     # get item from dynamodb table 'Users'

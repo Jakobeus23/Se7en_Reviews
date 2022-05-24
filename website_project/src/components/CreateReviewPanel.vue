@@ -1,4 +1,5 @@
 <template>
+<<<<<<< Updated upstream
 <form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop submit button when > 2000 -->
 
     <label for = "newReview"> <strong>New Review:</strong>
@@ -40,6 +41,73 @@
         <div v-if="newReviewCharacterCt > 2000">
             Limit Exceeded!
         </div>
+=======
+  <form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop submit button when > 2000 -->
+    <div class="createReviewPanelSubmit">
+      <div class = "createReviewType">
+
+        <!--        <label for="newReviewType"> <strong>Type: </strong> </label>
+                    <select id = "newReviewType" v-model = "state.selectedReviewType">
+                        <option :value = "option.value" v-for = "(option, index) in state.reviewTypes" :key = "index">
+                            {{ option.name }}
+                        </option>
+                    </select>
+                    <br>
+        
+        <label for="newGenre"> <strong>Genre</strong> </label>
+        <br>
+        <select id = "newGenre" v-model = "state.selectedGenre">
+          <option :value = "option.value" v-for = "(option, index) in state.genres" :key = "index">
+            {{ option.name }}
+          </option>
+        </select>
+        <br>
+        -->
+        <label for = "newReview"> <strong>Artist</strong></label>
+        <textarea id="newReview" rows = "1" v-model = "state.newArtistContent"/>
+        <br>
+        <label for = "newReview"> <strong>Album</strong></label>
+        <textarea id="newReview" rows = "1" v-model = "state.newAlbumContent"/>
+        <br>
+        <label for = "newReview"> <strong>Song Name</strong>  </label>
+        <textarea id="newReview" rows = "1" v-model = "state.newSongNameContent"/>
+        <br>
+        <div class = "url" v-if="state.newSongNameContent != ''">
+          <form @click="sendSongRequest()">
+            <label for="checkbox-1-1"><strong>Generate and use song link?</strong></label>
+            <input type="checkbox" id="checkbox-1-1" class="custom-checkbox" />
+          </form>
+            <br>
+              <div v-if="(state.songURL == '') && (state.sentRequest == true)">
+                Retrieving...
+              </div>
+              <div v-if="(state.songURL != '') && (state.sentRequest == true)">
+                <label for = "newReview"> 
+                <strong>
+                  <a :href="state.songURL" target="_blank">
+                    '{{ state.songTitle }}'
+                  </a>
+                </strong></label>
+                <!--<br>
+                <br>
+                <label for = "newReview">(Click to verify link)</label> -->
+              </div>
+
+          <br>
+        </div>
+        <br>
+        <label for = "newReview"> <strong>New Review &emsp;</strong>
+          {{ newReviewCharacterCt }} &nbsp; / &nbsp; 2000
+        </label>
+        <textarea id="newReview" rows = "8" v-model = "state.newReviewContent"/>
+        <br>
+        <hr>
+        <button class = "button"> <strong>Post Review</strong></button>
+        <br>
+        <div v-if="newReviewCharacterCt > 2000">Limit Exceeded!</div>
+      </div>
+
+>>>>>>> Stashed changes
     </div>
 
     <button >
@@ -61,6 +129,10 @@ export default {
             newArtistContent: '',
             newAlbumContent: '',
             newSongNameContent: '',
+            songURL: '',
+            songTitle: '',
+            sentRequest: false,
+            checkboxSelected: false,
 //            selectedReviewType: 'choose',
             selectedGenre: 'choose',
 //            reviewTypes: [
@@ -98,7 +170,7 @@ export default {
         function createNewReview() {
             // converts review data into list to be sent (emitted) to addReview function in userProfile
             if (newReviewCharacterCt.value <= 2000) {
-                var newReviewList = [state.newReviewContent, state.selectedGenre, state.newArtistContent, state.newAlbumContent, state.newSongNameContent, new Date()]
+                var newReviewList = [state.newReviewContent, state.selectedGenre, state.newArtistContent, state.newAlbumContent, state.newSongNameContent, state.songURL, new Date()]
 
                 if (state.newReviewContent !== 'choose') {
                     ctx.emit('add-review', newReviewList);
@@ -106,6 +178,7 @@ export default {
                     state.newArtistContent = '';
                     state.newAlbumContent = '';
                     state.newSongNameContent = '';
+                    state.songURL = '';
                 }
                 state.newReviewContent = '';
             }
@@ -114,9 +187,41 @@ export default {
             }
         }
 
+      function sendSongRequest() {
+        state.checkboxSelected = !state.checkboxSelected
+        if (state.checkboxSelected == true) {
+          state.songURL = ''
+          let song = state.newSongNameContent + " " + state.newArtistContent
+          console.log(song)
+          state.sentRequest = true
+          getSongURL(song)
+        }
+      }
+
+      const getSongURL = async (song) => {
+        await fetch('http://localhost:5000/song', {
+        method: 'POST',
+        body: JSON.stringify({ song }),
+        headers: {
+            'Content-type': 'application/json',
+        }
+        })
+        .then((response) => response.json())
+        .then(function (songURL) {
+            console.log(songURL);      
+            state.songURL = songURL.source
+            state.songTitle = songURL.title
+        })
+        .catch(function (error) {
+          console.warn('Something went horribly wrong -->', error);
+        });
+      }
+
         return {
             state,
             newReviewCharacterCt,
+            getSongURL,
+            sendSongRequest,
             createNewReview
         }
     }
@@ -124,6 +229,16 @@ export default {
 </script>
 
 <style lang = "scss" scoped>
+<<<<<<< Updated upstream
+=======
+.url {
+  padding-top: 10px;
+  padding-bottom: 10p
+}
+
+//* {box-sizing: border-box}
+
+>>>>>>> Stashed changes
 .createReviewPanel {
     padding-top: 20px;
     display: flex;

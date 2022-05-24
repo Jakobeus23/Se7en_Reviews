@@ -39,6 +39,7 @@
         <div v-else> Nothing yet :)</div>
 
     </div>
+<<<<<<< Updated upstream
     <!--
         <div class = "followButton">
             <button v-on:click="followUser">
@@ -51,6 +52,8 @@
                 Logout
             </button>
         </div>
+=======
+>>>>>>> Stashed changes
     </div>
   </div>
 </template>
@@ -74,6 +77,7 @@ export default {
 
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
     // 9: Add security to passwords
+<<<<<<< Updated upstream
     // ?: add a show less after expanding review
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
     // ?: Add click outside functionality for dropdown boxes
@@ -91,6 +95,36 @@ export default {
     // delete/edit review
     //    ^--> this requires a drop-down box when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
  
+=======
+    // ?: require first two sections on post to prevent garbage
+    // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-fo
+    // ?: album art fetch api, since fetch is limited, need to save in bucket or something. 
+    // ?: album art / artist / relevant --> store image url, if not loaded = blank
+    // ?: search
+    // ?: Change yt link to be an actual youtube url
+    // ?: Fix post saying sendDelete
+    // ?: leave note so user knows they can leave review fields blank 
+    // ?: remove resizing on post textboxes
+    // ?: add artist name or album if there to ytsearch for accuracy
+    // ?: song links expire? need new way to get link
+
+    // eventually:
+    // Gradually load reviews on browse instead of all at once --> look up load on scroll 
+    // Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist
+    // ?: Add click outside functionality for dropdown boxes
+    // if not logged in block any /profile domains
+    // profile.vue uses login fetch
+    // /user/userID is useless rn btw
+
+    // BY PRESENTATION DAY --> fuck me am i right lol
+    // ssl certs
+    // 5.6: Add stats to user like average rating, past likes, total likes, etc.
+    // ?: Order the reviews in reverse-id order so the newest is at front
+    // keep me signed in
+    // refresh still logs you out
+    // if read more not necessary, dont put. if (110 long) for example
+    // dont allow sign-in to be clicked if empty
+>>>>>>> Stashed changes
 
       const state = reactive({
         followers: 0,
@@ -109,9 +143,26 @@ export default {
         state.UserID = userId.value
       }
 
+<<<<<<< Updated upstream
       function toggleFavorite(id) {
         console.log(`Favorited Review = ${id}`)
     }
+=======
+      function deleteReview(id) {
+      // scuffed because I can't call await methods without it being in a const function
+        const data = [id, user.value.Item.UserID]
+        console.log("data")
+        console.log(data)
+        //sendDelete(data);
+      }
+
+      
+      // for updating state-user according to database
+      const setUser = async (user) => {
+        await store.dispatch('User/setUser', user);
+        console.log(user.Item.username)
+      }
+>>>>>>> Stashed changes
 
       const logout = async () => {
         await store.dispatch('User/setUser', null);

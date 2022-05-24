@@ -28,7 +28,14 @@
 
       <div class = "loginRegister" v-else>
         <router-link to="/login">
+<<<<<<< Updated upstream
           Login / Register
+=======
+          <span>Login</span>
+        </router-link> |
+        <router-link to="/register">
+          <span>Register</span>
+>>>>>>> Stashed changes
         </router-link>
       </div>
     </nav>
@@ -47,8 +54,6 @@ export default {
   setup() {
     const store = useStore();
     const user = computed(() => store.state.User.user);
-
-
 
     return {
       user,

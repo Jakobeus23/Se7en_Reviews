@@ -13,8 +13,14 @@
             <div v-if="review.album != ''">
                 Album - {{ review.album }} 
             </div>
-            <div v-if="review.songname != ''">
-                Song name - {{ review.songname }} 
+            <div v-if="review.songname != ''" class="songName">
+                <div v-if="review.songURL != ''">
+                    Song name - 
+                    <a :href="review.songURL" target="_blank" @click="showOptions">
+                        {{ review.songname }} 
+                    </a>
+                </div>
+                <div v-else class="songURL"> Song name - {{ review.songname }} </div>
             </div>
             <br>
 
@@ -33,6 +39,38 @@
             </div>
         </div>
         
+<<<<<<< Updated upstream
+=======
+        <div v-if="optionsToggle && (!fullReview == '')">
+            <br>
+            <strong class = "readMoreShowLess"> (Click to show less) </strong>
+        </div>
+
+        <!-- edit and delete here // set ONLY if logged in -->
+      <div v-if="loggedIn == true">
+        <div v-if="optionsToggle">
+            <br>
+            <button dark class="button" @click="deleteReview(review.id)">
+                Delete
+            </button>
+            &nbsp; &nbsp;      
+        <!--<router-link :to="{ name: 'Edit', params: {reviewId: review.id} }" :key="username">-->
+            <button dark class="button" @click="EditReview(review.id)">
+                Edit
+            </button>
+        <!--</router-link>-->
+        </div>
+      </div>
+     </div>
+     <div v-else>
+        <div v-if="state.delete">
+            <Delete :username = "username" :review = "review" :edit = "state.edit" @showOptions="showOptions" @changeEdit="changeEdit"/>
+        </div>
+        <div v-else>
+            <Edit :username = "username" :review = "review" :edit = "state.edit" @showOptions="showOptions" @changeEdit="changeEdit"/>
+        </div>
+     </div>
+>>>>>>> Stashed changes
     </div>
 </div>
 </template>
@@ -52,9 +90,31 @@ export default {
         const shortReview = props.review.content.substring(0, 110);
         const fullReview = props.review.content.substring(110, reviewLength.value)
 
+<<<<<<< Updated upstream
 
         function showOptions(id) {
             ctx.emit('favorite', id)
+=======
+        // state v-if edit-on --> on every review. Edit switches this
+        function showOptions() {
+            optionsToggle.value = !optionsToggle.value;
+        }
+        function changeEdit() {
+            state.edit = !state.edit;
+            state.delete = !state.delete;
+        }
+        function deleteReview(id) {
+            // need to call delete after asking if sure --> doesn't work yet
+            console.log(`in delete, id = ${id}`);
+            state.edit = !state.edit;
+            state.delete = !state.delete;
+            optionsToggle.value = !optionsToggle.value;
+        }
+        function EditReview(id) {
+            console.log(`in edit, id = ${id}`);
+            state.edit = !state.edit;
+            console.log(state.edit);
+>>>>>>> Stashed changes
             optionsToggle.value = !optionsToggle.value;
         }
 
@@ -63,8 +123,17 @@ export default {
             optionsToggle,
             reviewLength,
             shortReview,
+<<<<<<< Updated upstream
             fullReview
         }
+=======
+            fullReview,
+            EditReview,
+            deleteReview,
+            changeEdit,
+            state
+        };
+>>>>>>> Stashed changes
     },
     props:  {
         username: {
@@ -91,7 +160,6 @@ export default {
     width: 550px;
     margin: auto;
     margin-top: 5px;
-    //font-size: 18px;   --> if I use serif instead of arial
 
     &:hover {
         transform: scale(1.1, 1.1);
@@ -109,4 +177,17 @@ export default {
         color: rgb(82, 82, 82)
     }
 }
+<<<<<<< Updated upstream
 </style>
+=======
+
+.songName {
+    display: inline;
+}
+
+a:hover {
+    color: rgb(0, 0, 255);
+}
+
+</style>
+>>>>>>> Stashed changes
